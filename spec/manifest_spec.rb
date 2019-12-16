@@ -16,5 +16,10 @@ RSpec.describe Manifest do
       h = { 'a' => [ { 'b' => 'value' } ] } 
       expect(Manifest.traverse(h, '/a/b=value')).to eql({'b' => 'value'})
     end
+
+    it "yash" do
+      h = { 'a' => [ { 'b' => 'value' } ] } 
+      expect(Manifest.traverse(h, '/a/b=value')).to eql({'b' => 'value'})
+    end
   end
 end
