@@ -13,17 +13,11 @@ class Manifest
       if h.is_a?(Hash)
         if h.key?(parts.first)
           traverse(h[parts.first], parts.last)
-        else
-          nil
         end
       elsif h.is_a?(Array)
         if h.include?(parts.first)
           traverse(h[h.find_index(parts.fist)], parts.last)
-        else
-          nil
         end
-      else
-        nil
       end
     end
   end
@@ -35,8 +29,6 @@ class Manifest
         comps = component.split('=')
         if h.first.has_value?(comps.last)
           traverse(h.first, component.last)
-        else
-          nil
         end
       end
     end
