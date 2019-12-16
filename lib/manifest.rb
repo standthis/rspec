@@ -2,7 +2,7 @@ class Manifest
   #attr_reader :manifest 
   def self.traverse(h, path)
     parts = path.split('/', 3).reject { |e| e.to_s.empty? }
-    #self.matchequal(h, path)
+    self.matchequal(h, parts)
     if parts.length == 1
       if parts.first.include?('=')
         return h.first
