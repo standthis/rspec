@@ -1,32 +1,28 @@
 class Manifest 
-
   def self.traverse(h, path)
-    parts = path.split('/', 3).reject { |e| e.to_s.empty? }
-    parts = [parts.first, parts[1..-1].join('/')]
-    puts "#{h} #{parts.inspect}"
-    if parts.length == 1 
-      if parts.first.include?('=')
-        comps = parts.first.split('=')
-        dd = h.find { |pair| pair[comps.first] == comps.last } 
-        puts '1'
-        return dd
+    first, *rest = path.split('/').reject { |e| e.to_s.empty? }
+    rest = rest.join('/')
+
+    if rest == ""
+      if first.include?('=')
+        components = first.split('=')
+        found = h.find { |pair| pair[components.first] == components.last } 
+        return found
       end
-      return h[parts.first]
+      return h[first]
     end  
-    if parts.first.include?('=')
-      comps = parts.first.split('=')
-      dd = h.find { |pair| pair[comps.first] == comps.last } 
-      puts '3'
-      return traverse(dd, parts.last)
+
+    if first.include?('=')
+      components = first.split('=')
+      found = h.find { |pair| pair[components.first] == components.last } 
+      return traverse(found, rest)
     end
 
     if h.is_a?(Hash)
-      if h.key?(parts.first)
-        puts '4'
-        return traverse(h[parts.first], parts.last)
+      if h.key?(first)
+        return traverse(h[first], rest)
       end
     end
     raise NotImplementedError
   end
-
 end
